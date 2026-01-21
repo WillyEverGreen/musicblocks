@@ -278,7 +278,7 @@ function setupProgramBlocks(activity) {
                             activity.blocks.blockList[c].value[1]
                         );
                         if (!Array.isArray(logo.turtleHeaps[turtle])) {
-                            throw "is not array";
+                            throw new Error("is not array");
                         }
                     } catch (e) {
                         logo.turtleHeaps[turtle] = oldHeap;
@@ -349,7 +349,7 @@ function setupProgramBlocks(activity) {
                 try {
                     logo.turtleHeaps[turtle] = JSON.parse(activity.blocks.blockList[c].value);
                     if (!Array.isArray(logo.turtleHeaps[turtle])) {
-                        throw "is not array";
+                        throw new Error("is not array");
                     }
                 } catch (e) {
                     logo.turtleHeaps[turtle] = oldHeap;
@@ -1129,7 +1129,7 @@ function setupProgramBlocks(activity) {
                         }
                     }
 
-                    activity.blocks.blockList[args[0]].connections[args][1] = null;
+                    activity.blocks.blockList[args[0]].connections[args[1]] = null;
                 }
             }
 
@@ -1404,13 +1404,13 @@ function setupProgramBlocks(activity) {
              * @param {string} str - The string to be checked.
              * @returns {boolean} True if the string is a valid URL, false otherwise.
              */
-            function ValidURL(str) {
+            const validURL = str => {
                 const pattern = new RegExp(
                     "^(https?:\\/\\/)?" + // protocol
-                    "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-                    "((\\d{1,3}\\.) {3}\\d{1,3}))" + // OR ip (v4) address
-                    "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-                    "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+                        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+                        "((\\d{1,3}\\.) {3}\\d{1,3}))" + // OR ip (v4) address
+                        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+                        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
                         "(\\#[-a-z\\d_]*)?$",
                     "i"
                 ); // fragment locator
@@ -1420,16 +1420,16 @@ function setupProgramBlocks(activity) {
                 } else {
                     return true;
                 }
-            }
+            };
 
-            if (ValidURL(url)) {
+            if (validURL(url)) {
                 const win = window.open(url, "_blank");
                 if (win) {
                     // Browser has allowed it to be opened.
                     win.focus();
                 } else {
                     // Browser has blocked it.
-                    alert("Please allow popups for this site");
+                    activity.errorMsg(_("Please allow popups for this site"));
                 }
             }
         }
