@@ -1437,7 +1437,7 @@ function setupProgramBlocks(activity) {
 }
 
 /**
- * Validates if the argument value matches the expected dock type.
+ * Validates if the argument value matches the expected dock type defined in block protocols.
  * @param {string} type - The dock type (e.g., 'numberin', 'textin', 'anyin').
  * @param {any} value - The value to check.
  * @returns {boolean} True if valid, false otherwise.
