@@ -17,6 +17,21 @@
 
 /* exported setupProgramBlocks */
 
+/**
+ * Validates if the argument value matches the expected dock type defined in block protocols.
+ * Helper function to ensure type safety.
+ * @param {string} type - The dock type (e.g., 'numberin', 'textin', 'anyin').
+ * @param {any} value - The value to check.
+ * @returns {boolean} True if valid, false otherwise.
+ */
+const validateArg = (type, value) => {
+    if (type === "anyin") return true;
+    if (type === "numberin" && typeof value === "number") return true;
+    if (type === "textin" && typeof value === "string") return true;
+    // Add more types as needed
+    return false;
+};
+
 function setupProgramBlocks(activity) {
     /**
      * Represents a block that loads the heap from a web page in the logo programming language.
@@ -1435,21 +1450,6 @@ function setupProgramBlocks(activity) {
     new LoadHeapBlock().setup(activity);
     new SetHeapBlock().setup(activity);
 }
-
-/**
- * Validates if the argument value matches the expected dock type defined in block protocols.
- * Helper function to ensure type safety.
- * @param {string} type - The dock type (e.g., 'numberin', 'textin', 'anyin').
- * @param {any} value - The value to check.
- * @returns {boolean} True if valid, false otherwise.
- */
-const validateArg = (type, value) => {
-    if (type === "anyin") return true;
-    if (type === "numberin" && typeof value === "number") return true;
-    if (type === "textin" && typeof value === "string") return true;
-    // Add more types as needed
-    return false;
-};
 
 if (typeof module !== "undefined" && module.exports) {
     module.exports = { setupProgramBlocks };
