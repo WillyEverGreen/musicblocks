@@ -20,6 +20,7 @@
 /**
  * Validates if the argument value matches the expected dock type defined in block protocols.
  * Helper function to ensure type safety.
+ * Validates against numberin, textin, and anyin types.
  * @param {string} type - The dock type (e.g., 'numberin', 'textin', 'anyin').
  * @param {any} value - The value to check.
  * @returns {boolean} True if valid, false otherwise.
