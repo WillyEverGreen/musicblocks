@@ -1292,31 +1292,24 @@ function setupProgramBlocks(activity) {
                         i < activity.blocks.protoBlockDict[protoblk].dockTypes.length;
                         i++
                     ) {
-                        // FIXME: type check args
+                        // FIXME: type check args - FIXED
                         if (i < blockArgs.length) {
-                            if (typeof blockArgs[i] === "number") {
-                                if (
-                                    !["anyin", "numberin"].includes(
-                                        activity.blocks.protoBlockDict[protoblk].dockTypes[i]
-                                    )
-                                ) {
-                                    activity.errorMsg(_("Warning: block argument type mismatch"));
+                            const dockType = activity.blocks.protoBlockDict[protoblk].dockTypes[i];
+                            const argValue = blockArgs[i];
+
+                            if (validateArg(dockType, argValue)) {
+                                if (typeof argValue === "number") {
+                                    newBlock.push([i, ["number", { value: argValue }], 0, 0, [0]]);
+                                } else if (typeof argValue === "string") {
+                                    newBlock.push([i, ["string", { value: argValue }], 0, 0, [0]]);
+                                } else {
+                                    newBlock[0][4].push(null);
                                 }
-                                newBlock.push([i, ["number", { value: blockArgs[i] }], 0, 0, [0]]);
-                            } else if (typeof blockArgs[i] === "string") {
-                                if (
-                                    !["anyin", "textin"].includes(
-                                        activity.blocks.protoBlockDict[protoblk].dockTypes[i]
-                                    )
-                                ) {
-                                    activity.errorMsg(_("Warning: block argument type mismatch"));
-                                }
-                                newBlock.push([i, ["string", { value: blockArgs[i] }], 0, 0, [0]]);
+                                newBlock[0][4].push(i);
                             } else {
+                                activity.errorMsg(_("Warning: block argument type mismatch"));
                                 newBlock[0][4].push(null);
                             }
-
-                            newBlock[0][4].push(i);
                         } else {
                             newBlock[0][4].push(null);
                         }
@@ -1442,6 +1435,20 @@ function setupProgramBlocks(activity) {
     new LoadHeapBlock().setup(activity);
     new SetHeapBlock().setup(activity);
 }
+
+/**
+ * Validates if the argument value matches the expected dock type.
+ * @param {string} type - The dock type (e.g., 'numberin', 'textin', 'anyin').
+ * @param {any} value - The value to check.
+ * @returns {boolean} True if valid, false otherwise.
+ */
+const validateArg = (type, value) => {
+    if (type === "anyin") return true;
+    if (type === "numberin" && typeof value === "number") return true;
+    if (type === "textin" && typeof value === "string") return true;
+    // Add more types as needed
+    return false;
+};
 
 if (typeof module !== "undefined" && module.exports) {
     module.exports = { setupProgramBlocks };
