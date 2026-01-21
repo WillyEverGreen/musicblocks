@@ -17,23 +17,23 @@
 
 /* exported setupProgramBlocks */
 
-/**
- * Validates if the argument value matches the expected dock type defined in block protocols.
- * Helper function to ensure type safety.
- * Validates against numberin, textin, and anyin types.
- * @param {string} type - The dock type (e.g., 'numberin', 'textin', 'anyin').
- * @param {any} value - The value to check.
- * @returns {boolean} True if valid, false otherwise.
- */
-const validateArg = (type, value) => {
-    if (type === "anyin") return true;
-    if (type === "numberin" && typeof value === "number") return true;
-    if (type === "textin" && typeof value === "string") return true;
-    // Add more types as needed
-    return false;
-};
-
 function setupProgramBlocks(activity) {
+    /**
+     * Validates if the argument value matches the expected dock type defined in block protocols.
+     * Helper function to ensure type safety.
+     * Validates against numberin, textin, and anyin types.
+     * @param {string} type - The dock type (e.g., 'numberin', 'textin', 'anyin').
+     * @param {any} value - The value to check.
+     * @returns {boolean} True if valid, false otherwise.
+     */
+    const validateArg = (type, value) => {
+        if (type === "anyin") return true;
+        if (type === "numberin" && typeof value === "number") return true;
+        if (type === "textin" && typeof value === "string") return true;
+        // Add more types as needed
+        return false;
+    };
+
     /**
      * Represents a block that loads the heap from a web page in the logo programming language.
      * @extends {FlowBlock}
