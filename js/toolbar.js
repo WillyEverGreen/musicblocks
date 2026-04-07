@@ -656,7 +656,7 @@ class Toolbar {
     renderThemeSelectIcon(themeBox, themes) {
         const icon = docById("themeSelectIcon");
         if (!icon) return;
-    
+
         themes.forEach(theme => {
             if (localStorage.themePreference === theme) {
                 icon.innerHTML = docById(theme).innerHTML;
